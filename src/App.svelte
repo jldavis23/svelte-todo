@@ -1,5 +1,12 @@
 <script>
   let todos = [{id: 5, label: 'cheese'}]
+  let id = 0
+
+  const addATodo = (e) => {
+    let newTodoList = [...todos, {id: id++, label: e.target[0].value, isComplete: false, editMode: false}]
+    todos = newTodoList
+    e.target[0].value = ''
+  }
   
 </script>
 
@@ -7,7 +14,7 @@
   <div class="wrapper">
     <h1>TODO</h1>
 
-    <form class="add-todos">
+    <form class="add-todos" on:submit|preventDefault={addATodo}>
       <input type="text" placeholder="Create a new todo...">
       <button type="submit">+</button>
     </form>
