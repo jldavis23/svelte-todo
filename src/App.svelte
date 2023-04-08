@@ -1,7 +1,6 @@
 <script>
   let todos = []
   let id = 0
-  let value
 
   const addATodo = (e) => {
     let newTodoList = [...todos, {id: id++, label: e.target[0].value, isComplete: false, editMode: false}]
@@ -35,6 +34,10 @@
     const updatedTodos = todos.filter((todo) => todo.id !== id)
     todos = updatedTodos
   }
+
+  const clearCompletedTodos = () => {
+    todos = todos.filter(todo => !todo.isComplete)
+  }
   
 </script>
 
@@ -48,7 +51,7 @@
     </form>
 
     <ul class="todo-list">
-      {#each todos as todo}
+      {#each todos as todo (todo.id)}
         <li class="todo">
           <div class="todo-label">
             <input type="checkbox" on:click={() => checkTodo(todo.id)}>
@@ -68,9 +71,10 @@
         </li>
       {/each}
     </ul>
+
+    <div class="info">
+      <p>{todos.filter(todo => !todo.isComplete).length} items left</p>
+      <button on:click={clearCompletedTodos}>Clear Completed</button>
+    </div>
   </div>
 </main>
-
-<style>
- 
-</style>
