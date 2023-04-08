@@ -1,11 +1,23 @@
 <script>
-  let todos = [{id: 5, label: 'cheese'}]
+  let todos = [{id: 500000, label: 'cheese'}]
   let id = 0
+  let value
 
   const addATodo = (e) => {
     let newTodoList = [...todos, {id: id++, label: e.target[0].value, isComplete: false, editMode: false}]
     todos = newTodoList
     e.target[0].value = ''
+  }
+
+  const editOrSave = (id) => {
+    const updatedTodos = todos.map(todo => {
+      if (todo.id === id) {
+        return {id: todo.id, label: todo.label, isComplete: todo.isComplete, editMode: !todo.editMode}
+      } else {
+        return todo
+      }
+    })
+    todos = updatedTodos
   }
   
 </script>
@@ -24,11 +36,17 @@
         <li class="todo">
           <div class="todo-label">
             <input type="checkbox">
+            {#if todo.editMode}
+            <form on:submit|preventDefault={() => editOrSave(todo.id)}>
+              <input type="text" bind:value={todo.label}>
+            </form>
+            {:else}
             <span>{todo.label}</span>
+            {/if}
           </div>
 
           <div class="todo-buttons">
-            <button>edit</button>
+            <button on:click={() => editOrSave(todo.id)}>{todo.editMode ? 'save' : 'edit'}</button>
             <button>delete</button>
           </div>
         </li>
