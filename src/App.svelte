@@ -3,36 +3,32 @@
   let id = 0
 
   const addATodo = (e) => {
-    let newTodoList = [...todos, {id: id++, label: e.target[0].value, isComplete: false, editMode: false}]
-    todos = newTodoList
+    todos = [...todos, {id: id++, label: e.target[0].value, isComplete: false, editMode: false}]
     e.target[0].value = ''
   }
 
   const editOrSave = (id) => {
-    const updatedTodos = todos.map(todo => {
+    todos = todos.map(todo => {
       if (todo.id === id) {
         return {id: todo.id, label: todo.label, isComplete: todo.isComplete, editMode: !todo.editMode}
       } else {
         return todo
       }
     })
-    todos = updatedTodos
   }
 
   const checkTodo = (id) => {
-    const updatedTodos = todos.map(todo => {
+    todos = todos.map(todo => {
       if (todo.id === id) {
         return {id: todo.id, label: todo.label, isComplete: !todo.isComplete, editMode: todo.editMode}
       } else {
         return todo
       }
     })
-    todos = updatedTodos
   }
 
   const deleteTodo = (id) => {
-    const updatedTodos = todos.filter((todo) => todo.id !== id)
-    todos = updatedTodos
+    todos = todos.filter((todo) => todo.id !== id)
   }
 
   const clearCompletedTodos = () => {
