@@ -1,5 +1,5 @@
 <script>
-  let todos = [{id: 500000, label: 'cheese'}]
+  let todos = []
   let id = 0
   let value
 
@@ -30,6 +30,11 @@
     })
     todos = updatedTodos
   }
+
+  const deleteTodo = (id) => {
+    const updatedTodos = todos.filter((todo) => todo.id !== id)
+    todos = updatedTodos
+  }
   
 </script>
 
@@ -58,7 +63,7 @@
 
           <div class="todo-buttons">
             <button on:click={() => editOrSave(todo.id)}>{todo.editMode ? 'save' : 'edit'}</button>
-            <button>delete</button>
+            <button on:click={() => deleteTodo(todo.id)}>delete</button>
           </div>
         </li>
       {/each}
