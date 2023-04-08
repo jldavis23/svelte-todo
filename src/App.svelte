@@ -19,6 +19,17 @@
     })
     todos = updatedTodos
   }
+
+  const checkTodo = (id) => {
+    const updatedTodos = todos.map(todo => {
+      if (todo.id === id) {
+        return {id: todo.id, label: todo.label, isComplete: !todo.isComplete, editMode: todo.editMode}
+      } else {
+        return todo
+      }
+    })
+    todos = updatedTodos
+  }
   
 </script>
 
@@ -35,13 +46,13 @@
       {#each todos as todo}
         <li class="todo">
           <div class="todo-label">
-            <input type="checkbox">
+            <input type="checkbox" on:click={() => checkTodo(todo.id)}>
             {#if todo.editMode}
             <form on:submit|preventDefault={() => editOrSave(todo.id)}>
               <input type="text" bind:value={todo.label}>
             </form>
             {:else}
-            <span>{todo.label}</span>
+            <span class:completed={todo.isComplete}>{todo.label}</span>
             {/if}
           </div>
 
